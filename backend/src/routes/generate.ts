@@ -2,6 +2,7 @@ import express from 'express';
 // import multer from 'multer'; // photo upload currently disabled (commented out for future use)
 import path from 'path';
 import { generateFromTemplate } from '../services/imageService';
+import { saveGreeting } from '../db';
 
 const router = express.Router();
 
@@ -10,7 +11,8 @@ const router = express.Router();
 // To re-enable, uncomment the multer import and the `upload` lines above and the middleware below.
 router.post('/', async (req, res) => {
   try {
-  const name = (req.body.name || '').toString().slice(0, 25);
+  const name = (req.body.name || '').toString().slice(0, 100);
+  const phone = (req.body.phone || '').toString().slice(0, 50);
   const fontSize = req.body.fontSize ? parseInt(req.body.fontSize, 10) : undefined;
   const color = req.body.color || undefined;
   const template = req.body.template ? String(req.body.template) : 'teachersday';
@@ -20,8 +22,14 @@ router.post('/', async (req, res) => {
 
   const result = await generateFromTemplate(template, name, { fontSize, color }, photoFile);
 
-    // return URL
+  // attempt to save metadata to DB (will be noop if DB not configured)
+  try {
+    const saved = await saveGreeting(name || null, phone || null, result.url);
+    // include DB id/timestamp if available
+    return res.json({ ok: true, url: result.url, db: saved || null });
+  } catch (e) {
     return res.json({ ok: true, url: result.url });
+  }
   } catch (err: any) {
     console.error(err);
     res.status(500).json({ ok: false, error: err.message || 'Processing error' });

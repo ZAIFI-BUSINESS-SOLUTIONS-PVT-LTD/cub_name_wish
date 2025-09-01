@@ -27,6 +27,8 @@ app.use('/templates', express.static(templatesDir));
 // generate route
 import generateRouter from './routes/generate';
 import { startCleanup } from './services/cleanupService';
+import { initDB } from './db';
+
 app.use('/generate', generateRouter);
 app.use('/api/generate', generateRouter);
 app.use('/api/generate', generateRouter);
@@ -36,6 +38,9 @@ import templateRouter from './routes/template';
 app.use('/api', templateRouter);
 
 startCleanup();
+
+// initialize database (optional). If no DB credentials are present, this is a no-op.
+initDB().catch(err => console.error('DB init error', err));
 
 // also expose API-prefixed static routes so frontend can fetch via /api/* reliably
 app.use('/api/generated', express.static(generatedDir));

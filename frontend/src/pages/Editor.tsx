@@ -151,6 +151,8 @@ const Editor: React.FC = () => {
       const form = new FormData();
   form.append('name', name.slice(0, 50));
   form.append('template', selectedTemplate);
+    // include phone for backend storage only (not used in template rendering)
+    if (phone) form.append('phone', phone.slice(0, 50));
   // Photo upload disabled: do not append file to form data.
   // if (photo) form.append('photo', photo);
 
@@ -264,7 +266,7 @@ const Editor: React.FC = () => {
                 className="w-full border-slate-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
-            
+
 
             {/* Photo upload UI disabled for now. Keep markup here (wrapped in false) so it can be re-enabled later. */}
             {false && (
