@@ -1,0 +1,6 @@
+{
+  "templateWidth": 1920,
+  "templateHeight": 1080,
+  "textSlot": { "x": 1100, "y": 120, "fontSize": 72, "color": "#0f172a", "maxWidth": 700 },
+  "photoSlot": { "x": 120, "y": 250, "width": 400, "height": 400, "shape": "circle" }
+}

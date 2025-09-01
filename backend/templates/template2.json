@@ -1,0 +1,21 @@
+{
+  "textSlot": {
+    "x": 495,
+    "y": 333,
+    "fontSize": 30
+    
+    ,
+    "color": "#0b3d91",
+    "maxWidth": 500,
+    "width": 300,
+    "height": 50,
+    "textAlign": "center"
+  },
+  "photoSlot": {
+    "x": 570,
+    "y": 399,
+    "width": 150,
+    "height": 150,
+    "shape": "circle"
+  }
+}
